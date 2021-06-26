@@ -35,7 +35,7 @@ public class BookMongoController {
 	private BookMapper bookMapper;
 
 	// -------------------Retrieve All Books-------------------------------------------------------- 
-    // http://localhost:8080/BookManager/books/?page=0&size=3&sort=name
+
 	@GetMapping(value = "/books/")
 	public ResponseEntity<List<BookDTO>> listAllBooks(Pageable pageable) {
 		Page<Book> books = bookMongoService.findAllBooks(pageable);
@@ -80,9 +80,7 @@ public class BookMongoController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-		Book book = bookMapper.fromDTO(bookDTO);
-		book.setId(id);
-		return new ResponseEntity<>(bookMapper.toDTO(bookMongoService.updateBook(book)),
+		return new ResponseEntity<>(bookMapper.toDTO(bookMongoService.updateBook(bookMapper.fromDTO(bookDTO))),
 				HttpStatus.OK);
 	}
 

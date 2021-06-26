@@ -1,6 +1,6 @@
 package com.pbs.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -26,13 +26,13 @@ public class Book {
 
 	private boolean read;
 
-	private LocalDateTime dateInclusion;
+	private LocalDate dateInclusion;
 
 	public Book() {
 
 	}
 
-	public Book(String name, Integer year, boolean read, LocalDateTime dateInclusion) {
+	public Book(String name, Integer year, boolean read, LocalDate dateInclusion) {
 		this.name = name;
 		this.year = year;
 		this.read = read;

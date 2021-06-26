@@ -1,6 +1,6 @@
 package com.pbs;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -24,8 +24,8 @@ public class EBooksfyApplication implements CommandLineRunner {
 	public void run(String... args) {
 		bookMongoRepository.deleteAll();
 
-		final Book book = new Book("Libro1", 2021, true, LocalDateTime.now());
-		final Book book2 = new Book("Libro2", 2021, true, LocalDateTime.now());
+		final Book book = new Book("Libro1", 2021, true, LocalDate.now());
+		final Book book2 = new Book("Libro2", 2021, true, LocalDate.now());
 
 		bookMongoRepository.save(book);
 		bookMongoRepository.save(book2);
