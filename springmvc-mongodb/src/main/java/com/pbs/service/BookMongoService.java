@@ -15,7 +15,9 @@ public interface BookMongoService {
 
 	boolean isBookExist(Book book);
 
-	Book saveOrUpdateBook(Book book);
+	Book insertBook(Book book);
+	
+	Book updateBook(Book book);
 
 	void deleteBookById(long id);
 

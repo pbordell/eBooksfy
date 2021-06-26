@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +18,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import com.pbs.dto.BookDTO;
 import com.pbs.mapper.BookMapper;
@@ -62,13 +61,13 @@ public class BookMongoController {
 	// -------------------Create a Book--------------------------------------------------------
 
 	@PostMapping(value = "/book/")
-	public ResponseEntity<BookDTO> createBook(@RequestBody @Valid BookDTO bookDTO, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<BookDTO> createBook(@RequestBody @Valid BookDTO bookDTO) {
 
 		if (bookMongoService.isBookExist(bookMapper.fromDTO(bookDTO))) {
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 
-		return new ResponseEntity<>(bookMapper.toDTO(bookMongoService.saveOrUpdateBook(bookMapper.fromDTO(bookDTO))),
+		return new ResponseEntity<>(bookMapper.toDTO(bookMongoService.insertBook(bookMapper.fromDTO(bookDTO))),
 				HttpStatus.CREATED);
 	}
 
@@ -80,8 +79,10 @@ public class BookMongoController {
 		if (bookMongoService.findById(id) == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-
-		return new ResponseEntity<>(bookMapper.toDTO(bookMongoService.saveOrUpdateBook(bookMapper.fromDTO(bookDTO))),
+		
+		Book book = bookMapper.fromDTO(bookDTO);
+		book.setId(id);
+		return new ResponseEntity<>(bookMapper.toDTO(bookMongoService.updateBook(book)),
 				HttpStatus.OK);
 	}
 

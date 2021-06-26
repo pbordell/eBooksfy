@@ -1,5 +1,7 @@
 package com.pbs.service.impl;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,7 +37,13 @@ public class BookMongoServiceImpl implements BookMongoService {
 	}
 
 	@Override
-	public Book saveOrUpdateBook(Book book) {
+	public Book insertBook(Book book) {
+		book.setDateInclusion(LocalDateTime.now());
+		return bookMongoRepository.insert(book);
+	}
+	
+	@Override
+	public Book updateBook(Book book) {
 		return bookMongoRepository.save(book);
 		
 	}

@@ -4,15 +4,12 @@ import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
 @Data
 public class BookDTO {
-
-	@JsonIgnore
-	private long id;
 
 	@NotEmpty
 	private String name;
@@ -21,14 +18,14 @@ public class BookDTO {
 
 	private boolean read;
 
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDateTime dateInclusion;
 
 	public BookDTO() {
 
 	}
 
-	public BookDTO(long id, String name, Integer year, boolean read) {
-		this.id = id;
+	public BookDTO(String name, Integer year, boolean read) {
 		this.name = name;
 		this.year = year;
 		this.read = read;
